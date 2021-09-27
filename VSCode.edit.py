@@ -19,6 +19,13 @@ class Editor(renpy.editor.Editor):
 
     def end(self, **kwargs):
         args = ["code"] + self.args
+        if renpy.windows:
+            args = ['cmd', '/c'] + args
+            startupinfo = subprocess.STARTUPINFO()
+            startupinfo.dwFlags = subprocess.CREATE_NEW_CONSOLE | subprocess.STARTF_USESHOWWINDOW
+            startupinfo.wShowWindow = subprocess.SW_HIDE
+        else:
+            startupinfo = None
         args = [renpy.exports.fsencode(i) for i in args]
 
-        subprocess.Popen(args)
+        subprocess.Popen(args, startupinfo=startupinfo)
