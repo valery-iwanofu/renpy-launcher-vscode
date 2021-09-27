@@ -18,7 +18,7 @@ class Editor(renpy.editor.Editor):
         self.args.extend(["-a", directory])
 
     def end(self, **kwargs):
-        args = ["code"] + self.args
+        args = ["code"] + self.args + ['-r']
         if renpy.windows:
             args = ['cmd', '/c'] + args
             startupinfo = subprocess.STARTUPINFO()
